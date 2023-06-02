@@ -19,8 +19,6 @@ class LaravelStatsigServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-statsig')
             ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_laravel-statsig_table')
             ->hasCommands([
                 StatsigSyncCommand::class,
                 StatsigSendCommand::class,
