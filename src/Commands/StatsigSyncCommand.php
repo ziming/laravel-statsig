@@ -24,7 +24,7 @@ class StatsigSyncCommand extends Command
         $commandToRun = './vendor/statsig/statsigsdk/src/sync.php';
 
         foreach ($arguments as $key => $value) {
-            $commandToRun .= ' ' . $key . ' ' . $value;
+            $commandToRun .= ' '.$key.' '.$value;
         }
 
         $result = Process::run($commandToRun);

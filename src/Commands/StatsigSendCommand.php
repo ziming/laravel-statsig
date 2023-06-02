@@ -24,7 +24,7 @@ class StatsigSendCommand extends Command
         $commandToRun = './vendor/statsig/statsigsdk/src/send.php';
 
         foreach ($arguments as $key => $value) {
-            $commandToRun .= ' ' . $key . ' ' . $value;
+            $commandToRun .= ' '.$key.' '.$value;
         }
 
         $result = Process::run($commandToRun);
