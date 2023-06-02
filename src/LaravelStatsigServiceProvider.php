@@ -4,10 +4,6 @@ namespace Ziming\LaravelStatsig;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Statsig\Adapters\LocalFileDataAdapter;
-use Statsig\Adapters\LocalFileLoggingAdapter;
-use Statsig\StatsigOptions;
-use Statsig\StatsigServer;
 use Ziming\LaravelStatsig\Commands\StatsigSendCommand;
 use Ziming\LaravelStatsig\Commands\StatsigSyncCommand;
 

@@ -5,8 +5,6 @@ namespace Ziming\LaravelStatsig;
 use Illuminate\Foundation\Auth\User;
 use Statsig\Adapters\IDataAdapter;
 use Statsig\Adapters\ILoggingAdapter;
-use Statsig\Adapters\LocalFileDataAdapter;
-use Statsig\Adapters\LocalFileLoggingAdapter;
 use Statsig\DynamicConfig;
 use Statsig\Layer;
 use Statsig\StatsigOptions;
@@ -16,7 +14,9 @@ use Statsig\StatsigUser;
 class LaravelStatsig
 {
     private readonly IDataAdapter $configAdapter;
+
     private readonly ?ILoggingAdapter $loggingAdapter;
+
     private readonly StatsigServer $statsig;
 
     public function __construct()
