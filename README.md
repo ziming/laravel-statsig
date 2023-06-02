@@ -7,7 +7,7 @@
 
 Laravel Package for Statsig.
 
-This package is totally not ready for use yet. Please do not use it.
+This package is still very early in development & totally not ready for use yet. Please do not use it.
 
 ## Support us
 
