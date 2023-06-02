@@ -79,7 +79,7 @@ class LaravelStatsig
 
     private function getLaravelUserToStatsigUserConversionCallback(): callable
     {
-        if(self::$LaravelUserToStatsigUserConversionCallback === null) {
+        if (self::$LaravelUserToStatsigUserConversionCallback === null) {
             return function (User $laravelUser): StatsigUser {
                 return $this->defaultLaravelUserToStatsigUserConversion($laravelUser);
             };
