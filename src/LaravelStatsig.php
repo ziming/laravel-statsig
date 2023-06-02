@@ -21,10 +21,10 @@ class LaravelStatsig
 
     public function __construct()
     {
-        $this->configAdapter = new (config('laravel-statsig.data_adapter'));
-        $this->loggingAdapter = new (config('laravel-statsig.logging_adapter'));
+        $this->configAdapter = new (config('statsig.data_adapter'));
+        $this->loggingAdapter = new (config('statsig.logging_adapter'));
         $options = new StatsigOptions($this->configAdapter, $this->loggingAdapter);
-        $this->statsig = new StatsigServer(config('laravel-statsig.secret'), $options);
+        $this->statsig = new StatsigServer(config('statsig.secret'), $options);
     }
 
     public function checkGate(StatsigUser|User $user, string $gate): bool
