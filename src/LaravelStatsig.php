@@ -3,6 +3,7 @@
 namespace Ziming\LaravelStatsig;
 
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\App;
 use Statsig\Adapters\IDataAdapter;
 use Statsig\Adapters\ILoggingAdapter;
 use Statsig\DynamicConfig;
@@ -68,18 +69,30 @@ class LaravelStatsig
      */
     private function convertLaravelUserToStatsigUser(User $user, ?callable $conversionCallable = null): StatsigUser
     {
-        $statsigUser = StatsigUser::withUserID($user->getAuthIdentifier());
-        $statsigUser->setEmail($user->getEmailForVerification());
-
-        if ($conversionCallable !== null) {
-            $conversionCallable($user);
+        if ($conversionCallable === null) {
+            $statsigUser = $this->defaultLaravelUserToStatsigUserConversion($user);
+        } else {
+            $statsigUser = $conversionCallable($user);
         }
 
         return $statsigUser;
     }
 
+    private function defaultLaravelUserToStatsigUserConversion(User $user): StatsigUser
+    {
+        $statsigUser = StatsigUser::withUserID($user->getAuthIdentifier());
+        $statsigUser->setEmail($user->getEmailForVerification());
+        $statsigUser->setStatsigEnvironment([App::environment()]);
+
+        // are these set automatically? can i remove?
+        $statsigUser->setUserAgent(request()->userAgent());
+        $statsigUser->setIP(request()->ip());
+
+        return $statsigUser;
+    }
+
     /**
-     * If I missed out anything
+     * If I missed out anything or if Statsig added new methods
      */
     public function __call(string $name, array $arguments): mixed
     {
