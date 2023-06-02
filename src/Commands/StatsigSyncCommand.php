@@ -3,6 +3,7 @@
 namespace Ziming\LaravelStatsig\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Process;
 
 class StatsigSyncCommand extends Command
 {
@@ -13,6 +14,21 @@ class StatsigSyncCommand extends Command
     public function handle(): int
     {
         // TODO: Run the Statsig sync command here
-        return self::SUCCESS;
+        $arguments = [
+            '--secret' => config('statsig.secret'),
+            '--adapter-class' => config('statsig.data_adapter'),
+            // --adapter-arg Not used yet
+        ];
+
+        // Hope the package name and folders doesn't change in the future
+        $commandToRun = './vendor/statsig/statsigsdk/src/sync.php';
+
+        foreach ($arguments as $key => $value) {
+            $commandToRun .= ' ' . $key . ' ' . $value;
+        }
+
+        $result = Process::run($commandToRun);
+
+        return $result->exitCode();
     }
 }
