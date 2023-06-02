@@ -20,6 +20,24 @@ You can install the package via composer:
 ```bash
 composer require ziming/laravel-statsig
 ```
+
+Add the following 2 commands to your laravel project `app/Console/Kernel.php`
+
+```php
+use Ziming\LaravelStatsig\Commands\StatsigSendCommand;
+use Ziming\LaravelStatsig\Commands\StatsigSyncCommand;
+
+class Kernel extends ConsoleKernel
+{
+    /**
+     * Define the application's command schedule.
+     */
+    protected function schedule(Schedule $schedule): void
+    {
+        $schedule->command(StatsigSyncCommand::class)->everyMinute();
+        $schedule->command(StatsigSendCommand::class)->everyMinute();
+    }
+```
 Ignore this section.
 
 You can publish and run the migrations with:
