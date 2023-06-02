@@ -76,7 +76,7 @@ LaravelStatsig::checkGate($user, '<gate_name>');
 
 // You can set add this to your AppServiceProvider boot() method to
 // override the default laravel user to Statsig user conversion code too if you want
-$laravelStatsig::setLaravelUserToStatsigUserConversionCallback(function (User $laravelUser) {
+LaravelStatsig::setLaravelUserToStatsigUserConversionCallback(function (User $laravelUser) {
         $statsigUser = StatsigUser::withUserID($laravelUser->getAuthIdentifier());
         $statsigUser->setCountry('US');
         
