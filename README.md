@@ -24,6 +24,11 @@ composer require ziming/laravel-statsig
 Add the following 2 commands to your laravel project `app/Console/Kernel.php`
 
 ```php
+<?php
+
+namespace App\Console;
+
+use Illuminate\Console\Scheduling\Schedule;
 use Ziming\LaravelStatsig\Commands\StatsigSendCommand;
 use Ziming\LaravelStatsig\Commands\StatsigSyncCommand;
 
@@ -38,14 +43,6 @@ class Kernel extends ConsoleKernel
         $schedule->command(StatsigSendCommand::class)->everyMinute();
     }
 ```
-Ignore this section.
-
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="laravel-statsig-migrations"
-php artisan migrate
-```
 
 You can publish the config file with:
 
@@ -56,14 +53,15 @@ php artisan vendor:publish --tag="laravel-statsig-config"
 This is the contents of the published config file:
 
 ```php
+use Statsig\Adapters\LocalFileDataAdapter;
+use Statsig\Adapters\LocalFileLoggingAdapter;
+
 return [
+    'secret' => env('STATSIG_SECRET_KEY'),
+
+    'data_adapter' => LocalFileDataAdapter::class,
+    'logging_adapter' => LocalFileLoggingAdapter::class,
 ];
-```
-
-Optionally, you can publish the views using (Ignore this section)
-
-```bash
-php artisan vendor:publish --tag="laravel-statsig-views"
 ```
 
 ## Usage
