@@ -10,6 +10,7 @@ use Statsig\Adapters\IDataAdapter;
 use Statsig\Adapters\ILoggingAdapter;
 use Statsig\DynamicConfig;
 use Statsig\Layer;
+use Statsig\StatsigEvent;
 use Statsig\StatsigOptions;
 use Statsig\StatsigServer;
 use Statsig\StatsigUser;
@@ -109,6 +110,30 @@ class LaravelStatsig
         $statsigUser->setIP(request()->ip());
 
         return $statsigUser;
+    }
+
+    public function logEvent(StatsigEvent $event): void
+    {
+        $this->statsig->logEvent($event);
+    }
+
+    public function getClientInitializeResponse(StatsigUser|user $user): ?array
+    {
+        if ($user instanceof User) {
+            $user = $this->convertLaravelUserToStatsigUser($user);
+        }
+
+        return $this->statsig->getClientInitializeResponse($user);
+    }
+
+    public function __destruct()
+    {
+        $this->statsig->__destruct();
+    }
+
+    public function flush(): void
+    {
+        $this->statsig->flush();
     }
 
     /**
