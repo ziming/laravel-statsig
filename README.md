@@ -11,7 +11,7 @@ This package is still very early in development & totally not ready for use yet.
 
 ## Support us
 
-To be added later
+New Adapters will be nice. Donations are welcomed too. Anything goes.
 
 ## Installation
 
@@ -67,8 +67,21 @@ return [
 ## Usage
 
 ```php
+use Illuminate\Foundation\Auth\User;
+
 $laravelStatsig = new Ziming\LaravelStatsig();
 
+// The Facade Version is fine too
+LaravelStatsig::checkGate($user, '<gate_name>');
+
+// You can set add this to your AppServiceProvider boot() method to override the default laravel user to 
+// Statsig user conversion code too if you want
+$laravelStatsig::setLaravelUserToStatsigUserConversionCallback(function (User $laravelUser) {
+        $statsigUser = StatsigUser::withUserID($laravelUser->getAuthIdentifier());
+        $statsigUser->setCountry('US');
+        
+        return $statsigUser;
+})
 ```
 
 ## Testing

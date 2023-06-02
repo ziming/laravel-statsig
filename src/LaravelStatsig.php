@@ -2,8 +2,10 @@
 
 namespace Ziming\LaravelStatsig;
 
+use Closure;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\App;
+use InvalidArgumentException;
 use Statsig\Adapters\IDataAdapter;
 use Statsig\Adapters\ILoggingAdapter;
 use Statsig\DynamicConfig;
@@ -19,6 +21,8 @@ class LaravelStatsig
     private readonly ?ILoggingAdapter $loggingAdapter;
 
     private readonly StatsigServer $statsig;
+
+    private static ?Closure $LaravelUserToStatsigUserConversionCallback;
 
     public function __construct()
     {
@@ -64,26 +68,42 @@ class LaravelStatsig
         return $this->statsig->getLayer($user, $layer);
     }
 
+    public static function setLaravelUserToStatsigUserConversionCallback(callable $callable): void
+    {
+        if (! is_callable($callable)) {
+            throw new InvalidArgumentException('This is not a callable');
+        }
+
+        self::$LaravelUserToStatsigUserConversionCallback = $callable;
+    }
+
+    private function getLaravelUserToStatsigUserConversionCallback(): callable
+    {
+        if(self::$LaravelUserToStatsigUserConversionCallback === null) {
+            return function (User $laravelUser): StatsigUser {
+                return $this->defaultLaravelUserToStatsigUserConversion($laravelUser);
+            };
+        }
+
+        return self::$LaravelUserToStatsigUserConversionCallback;
+    }
+
     /**
      * In future this will accept a callable/closure to allow for customizable laravel user to StatsigUser conversion
      */
-    private function convertLaravelUserToStatsigUser(User $user, ?callable $conversionCallable = null): StatsigUser
+    private function convertLaravelUserToStatsigUser(User $laravelUser): StatsigUser
     {
-        if ($conversionCallable === null) {
-            $statsigUser = $this->defaultLaravelUserToStatsigUserConversion($user);
-        } else {
-            $statsigUser = $conversionCallable($user);
-        }
+        $callback = $this->getLaravelUserToStatsigUserConversionCallback();
 
-        return $statsigUser;
+        return $callback($laravelUser);
     }
 
-    private function defaultLaravelUserToStatsigUserConversion(User $user): StatsigUser
+    private function defaultLaravelUserToStatsigUserConversion(User $laravelUser): StatsigUser
     {
-        $statsigUser = StatsigUser::withUserID($user->getAuthIdentifier());
-        $statsigUser->setEmail($user->getEmailForVerification());
+        $statsigUser = StatsigUser::withUserID($laravelUser->getAuthIdentifier());
+        $statsigUser->setEmail($laravelUser->getEmailForVerification());
         $statsigUser->setStatsigEnvironment([App::environment()]);
-
+        $statsigUser->setLocale(App::getLocale());
         // are these set automatically? can i remove?
         $statsigUser->setUserAgent(request()->userAgent());
         $statsigUser->setIP(request()->ip());
