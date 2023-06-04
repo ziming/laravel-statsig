@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ziming\LaravelStatsig\Commands;
 
 use Illuminate\Console\Command;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 // config for Ziming/LaravelStatsig
 use Statsig\Adapters\LocalFileDataAdapter;
 use Statsig\Adapters\LocalFileLoggingAdapter;

@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ziming\LaravelStatsig;
 
 use Closure;
 use Illuminate\Foundation\Auth\User;
-use InvalidArgumentException;
 use Statsig\Adapters\IDataAdapter;
 use Statsig\Adapters\ILoggingAdapter;
 use Statsig\DynamicConfig;
