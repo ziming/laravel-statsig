@@ -14,6 +14,7 @@ use Statsig\StatsigEvent;
 use Statsig\StatsigOptions;
 use Statsig\StatsigServer;
 use Statsig\StatsigUser;
+use Ziming\LaravelStatsig\Utils\LaravelUserToStatsiguserConverter;
 
 class LaravelStatsig
 {
@@ -101,15 +102,7 @@ class LaravelStatsig
 
     private function defaultLaravelUserToStatsigUserConversion(User $laravelUser): StatsigUser
     {
-        $statsigUser = StatsigUser::withUserID($laravelUser->getAuthIdentifier());
-        $statsigUser->setEmail($laravelUser->getEmailForVerification());
-        $statsigUser->setStatsigEnvironment([App::environment()]);
-        $statsigUser->setLocale(App::getLocale());
-        // are these set automatically? can i remove?
-        $statsigUser->setUserAgent(request()->userAgent());
-        $statsigUser->setIP(request()->ip());
-
-        return $statsigUser;
+        return LaravelUserToStatsigUserConverter::defaultConvert($laravelUser);
     }
 
     public function logEvent(StatsigEvent $event): void
