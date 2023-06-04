@@ -4,7 +4,6 @@ namespace Ziming\LaravelStatsig;
 
 use Closure;
 use Illuminate\Foundation\Auth\User;
-use Illuminate\Support\Facades\App;
 use InvalidArgumentException;
 use Statsig\Adapters\IDataAdapter;
 use Statsig\Adapters\ILoggingAdapter;
