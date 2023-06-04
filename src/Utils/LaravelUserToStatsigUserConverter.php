@@ -6,7 +6,7 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\App;
 use Statsig\StatsigUser;
 
-class LaravelUserToStatsiguserConverter
+class LaravelUserToStatsigUserConverter
 {
     public static function defaultConvert(User $laravelUser): StatsigUser
     {
