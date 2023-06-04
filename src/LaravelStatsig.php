@@ -69,24 +69,15 @@ class LaravelStatsig
         return $this->statsig->getLayer($user, $layer);
     }
 
-    public static function setLaravelUserToStatsigUserConversionCallback(callable $callable): void
-    {
-        if (! is_callable($callable)) {
-            throw new InvalidArgumentException('This is not a callable');
-        }
-
-        self::$LaravelUserToStatsigUserConversionCallback = $callable;
-    }
-
     private function getLaravelUserToStatsigUserConversionCallback(): callable
     {
-        if (self::$LaravelUserToStatsigUserConversionCallback === null) {
+        if (LaravelUserToStatsigUserConverter::$LaravelUserToStatsigUserConversionCallback === null) {
             return function (User $laravelUser): StatsigUser {
                 return $this->defaultLaravelUserToStatsigUserConversion($laravelUser);
             };
         }
 
-        return self::$LaravelUserToStatsigUserConversionCallback;
+        return LaravelUserToStatsigUserConverter::$LaravelUserToStatsigUserConversionCallback;
     }
 
     /**

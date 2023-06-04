@@ -4,10 +4,13 @@ namespace Ziming\LaravelStatsig\Utils;
 
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\App;
+use InvalidArgumentException;
 use Statsig\StatsigUser;
-
+use Closure;
 class LaravelUserToStatsigUserConverter
 {
+    public static ?Closure $LaravelUserToStatsigUserConversionCallback;
+
     public static function defaultConvert(User $laravelUser): StatsigUser
     {
         $statsigUser = StatsigUser::withUserID($laravelUser->getAuthIdentifier());
@@ -23,5 +26,14 @@ class LaravelUserToStatsigUserConverter
         $statsigUser->setUserAgent(request()->userAgent());
 
         return $statsigUser;
+    }
+
+    public static function setLaravelUserToStatsigUserConversionCallback(callable $callable): void
+    {
+        if (! is_callable($callable)) {
+            throw new InvalidArgumentException('This is not a callable');
+        }
+
+        self::$LaravelUserToStatsigUserConversionCallback = $callable;
     }
 }
