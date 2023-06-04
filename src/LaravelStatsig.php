@@ -13,7 +13,7 @@ use Statsig\StatsigEvent;
 use Statsig\StatsigOptions;
 use Statsig\StatsigServer;
 use Statsig\StatsigUser;
-use Ziming\LaravelStatsig\Utils\LaravelUserToStatsiguserConverter;
+use Ziming\LaravelStatsig\Utils\LaravelUserToStatsigUserConverter;
 
 class LaravelStatsig
 {
