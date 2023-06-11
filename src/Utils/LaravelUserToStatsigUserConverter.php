@@ -39,4 +39,22 @@ class LaravelUserToStatsigUserConverter
 
         self::$LaravelUserToStatsigUserConversionCallback = $callable;
     }
+
+    public static function getLaravelUserToStatsigUserConversionCallback(): callable
+    {
+        if (self::$LaravelUserToStatsigUserConversionCallback === null) {
+            return function (User $laravelUser): StatsigUser {
+                return self::defaultConvert($laravelUser);
+            };
+        }
+
+        return self::$LaravelUserToStatsigUserConversionCallback;
+    }
+
+    public static function convertLaravelUserToStatsigUser(User $laravelUser): StatsigUser
+    {
+        $callback = self::getLaravelUserToStatsigUserConversionCallback();
+
+        return $callback($laravelUser);
+    }
 }

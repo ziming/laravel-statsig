@@ -24,7 +24,6 @@ class LaravelStatsig
 
     private readonly StatsigServer $statsig;
 
-    private static ?Closure $LaravelUserToStatsigUserConversionCallback;
 
     public function __construct()
     {
@@ -37,7 +36,7 @@ class LaravelStatsig
     public function checkGate(StatsigUser|User $user, string $gate): bool
     {
         if ($user instanceof User) {
-            $user = $this->convertLaravelUserToStatsigUser($user);
+            $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
         }
 
         return $this->statsig->checkGate($user, $gate);
@@ -46,7 +45,7 @@ class LaravelStatsig
     public function getConfig(StatsigUser|User $user, string $config): DynamicConfig
     {
         if ($user instanceof User) {
-            $user = $this->convertLaravelUserToStatsigUser($user);
+            $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
         }
 
         return $this->statsig->getConfig($user, $config);
@@ -55,7 +54,7 @@ class LaravelStatsig
     public function getExperiment(StatsigUser|User $user, string $experiment): DynamicConfig
     {
         if ($user instanceof User) {
-            $user = $this->convertLaravelUserToStatsigUser($user);
+            $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
         }
 
         return $this->statsig->getExperiment($user, $experiment);
@@ -64,37 +63,12 @@ class LaravelStatsig
     public function getLayer(StatsigUser|User $user, string $layer): Layer
     {
         if ($user instanceof User) {
-            $user = $this->convertLaravelUserToStatsigUser($user);
+            $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
         }
 
         return $this->statsig->getLayer($user, $layer);
     }
 
-    private function getLaravelUserToStatsigUserConversionCallback(): callable
-    {
-        if (LaravelUserToStatsigUserConverter::$LaravelUserToStatsigUserConversionCallback === null) {
-            return function (User $laravelUser): StatsigUser {
-                return $this->defaultLaravelUserToStatsigUserConversion($laravelUser);
-            };
-        }
-
-        return LaravelUserToStatsigUserConverter::$LaravelUserToStatsigUserConversionCallback;
-    }
-
-    /**
-     * In future this will accept a callable/closure to allow for customizable laravel user to StatsigUser conversion
-     */
-    private function convertLaravelUserToStatsigUser(User $laravelUser): StatsigUser
-    {
-        $callback = $this->getLaravelUserToStatsigUserConversionCallback();
-
-        return $callback($laravelUser);
-    }
-
-    private function defaultLaravelUserToStatsigUserConversion(User $laravelUser): StatsigUser
-    {
-        return LaravelUserToStatsigUserConverter::defaultConvert($laravelUser);
-    }
 
     public function logEvent(StatsigEvent $event): void
     {
@@ -104,7 +78,7 @@ class LaravelStatsig
     public function getClientInitializeResponse(StatsigUser|user $user): ?array
     {
         if ($user instanceof User) {
-            $user = $this->convertLaravelUserToStatsigUser($user);
+            $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
         }
 
         return $this->statsig->getClientInitializeResponse($user);
