@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Ziming\LaravelStatsig;
 
-use Closure;
 use Illuminate\Foundation\Auth\User;
 use Statsig\Adapters\IDataAdapter;
 use Statsig\Adapters\ILoggingAdapter;
@@ -23,7 +22,6 @@ class LaravelStatsig
     private readonly ?ILoggingAdapter $loggingAdapter;
 
     private readonly StatsigServer $statsig;
-
 
     public function __construct()
     {
@@ -68,7 +66,6 @@ class LaravelStatsig
 
         return $this->statsig->getLayer($user, $layer);
     }
-
 
     public function logEvent(StatsigEvent $event): void
     {
