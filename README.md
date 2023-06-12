@@ -69,7 +69,7 @@ return [
 ```php
 use Illuminate\Foundation\Auth\User;
 use Statsig\StatsigUser;
-
+use Ziming\LaravelStatsig\Utils\LaravelUserToStatsigUserConverter;
 $laravelStatsig = new Ziming\LaravelStatsig();
 
 // The Facade Version is fine too
@@ -77,12 +77,12 @@ LaravelStatsig::checkGate($user, '<gate_name>');
 
 // You can set add this to your AppServiceProvider boot() method to
 // override the default laravel user to Statsig user conversion code too if you want
-LaravelStatsig::setLaravelUserToStatsigUserConversionCallback(function (User $laravelUser): StatsigUser {
+LaravelUserToStatsigUserConverter::setLaravelUserToStatsigUserConversionCallback(function (User $laravelUser): StatsigUser {
         $statsigUser = StatsigUser::withUserID($laravelUser->getAuthIdentifier());
         $statsigUser->setCountry('US');
         
         return $statsigUser;
-})
+});
 ```
 
 ## Testing

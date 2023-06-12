@@ -21,14 +21,14 @@ class LaravelStatsig
 
     private readonly ?ILoggingAdapter $loggingAdapter;
 
-    private readonly StatsigServer $statsig;
+    private readonly StatsigServer $statsigServer;
 
     public function __construct()
     {
         $this->configAdapter = new (config('statsig.data_adapter'));
         $this->loggingAdapter = new (config('statsig.logging_adapter'));
         $options = new StatsigOptions($this->configAdapter, $this->loggingAdapter);
-        $this->statsig = new StatsigServer(config('statsig.secret'), $options);
+        $this->statsigServer = new StatsigServer(config('statsig.secret'), $options);
     }
 
     public function checkGate(StatsigUser|User $user, string $gate): bool
@@ -37,7 +37,7 @@ class LaravelStatsig
             $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
         }
 
-        return $this->statsig->checkGate($user, $gate);
+        return $this->statsigServer->checkGate($user, $gate);
     }
 
     public function getConfig(StatsigUser|User $user, string $config): DynamicConfig
@@ -46,7 +46,7 @@ class LaravelStatsig
             $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
         }
 
-        return $this->statsig->getConfig($user, $config);
+        return $this->statsigServer->getConfig($user, $config);
     }
 
     public function getExperiment(StatsigUser|User $user, string $experiment): DynamicConfig
@@ -55,7 +55,7 @@ class LaravelStatsig
             $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
         }
 
-        return $this->statsig->getExperiment($user, $experiment);
+        return $this->statsigServer->getExperiment($user, $experiment);
     }
 
     public function getLayer(StatsigUser|User $user, string $layer): Layer
@@ -64,12 +64,12 @@ class LaravelStatsig
             $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
         }
 
-        return $this->statsig->getLayer($user, $layer);
+        return $this->statsigServer->getLayer($user, $layer);
     }
 
     public function logEvent(StatsigEvent $event): void
     {
-        $this->statsig->logEvent($event);
+        $this->statsigServer->logEvent($event);
     }
 
     public function getClientInitializeResponse(StatsigUser|user $user): ?array
@@ -78,17 +78,17 @@ class LaravelStatsig
             $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
         }
 
-        return $this->statsig->getClientInitializeResponse($user);
+        return $this->statsigServer->getClientInitializeResponse($user);
     }
 
     public function __destruct()
     {
-        $this->statsig->__destruct();
+        $this->statsigServer->__destruct();
     }
 
     public function flush(): void
     {
-        $this->statsig->flush();
+        $this->statsigServer->flush();
     }
 
     /**
@@ -96,6 +96,6 @@ class LaravelStatsig
      */
     public function __call(string $name, array $arguments): mixed
     {
-        return $this->statsig->$name(...$arguments);
+        return $this->statsigServer->$name(...$arguments);
     }
 }
