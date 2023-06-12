@@ -12,7 +12,7 @@ use Statsig\StatsigUser;
 
 class LaravelUserToStatsigUserConverter
 {
-    public static ?Closure $LaravelUserToStatsigUserConversionCallback = null;
+    private static ?Closure $LaravelUserToStatsigUserConversionCallback = null;
 
     public static function defaultConvert(User $laravelUser): StatsigUser
     {
