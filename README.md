@@ -7,11 +7,16 @@
 
 Laravel Package for Statsig.
 
-This package is still very early in development & totally not ready for use yet. Please do not use it.
+This package is still very early in development & likely not ready for production use yet. 
+Use at your own risk if you want to try it now as breaking changes are likely to happen.
+
+It is basically a wrapper around the [Statsig PHP SDK](https://docs.statsig.com/server/phpSDK)
 
 ## Support us
 
-New Adapters will be nice. Donations are welcomed too. Anything goes.
+New Adapters will be nice. Donations are welcomed too. Anything goes. 
+
+You can also let Stasig know that [this package referred you there](https://statsig.com/updates#6/12/2023)
 
 ## Installation
 
