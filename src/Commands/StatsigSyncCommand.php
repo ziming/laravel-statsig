@@ -23,7 +23,7 @@ class StatsigSyncCommand extends Command
         ];
 
         // Hope the package name and folders doesn't change in the future
-        $commandToRun = 'php ./vendor/statsig/statsigsdk/src/sync.php';
+        $commandToRun = 'php ./vendor/statsig/statsigsdk/sync.php';
 
         foreach ($arguments as $key => $value) {
             $commandToRun .= ' '.$key.' '.$value;
