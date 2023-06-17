@@ -30,6 +30,7 @@ class StatsigSendCommand extends Command
         }
 
         $result = Process::run($commandToRun);
+        $this->info($result->output());
 
         return $result->exitCode();
     }
