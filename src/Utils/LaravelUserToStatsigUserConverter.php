@@ -16,14 +16,17 @@ class LaravelUserToStatsigUserConverter
 
     public static function defaultConvert(User $laravelUser): StatsigUser
     {
-        $statsigUser = StatsigUser::withUserID($laravelUser->getAuthIdentifier());
+        $statsigUser = StatsigUser::withUserID(
+            (string) $laravelUser->getAuthIdentifier()
+        );
+
         $statsigUser->setEmail($laravelUser->getEmailForVerification());
         $statsigUser->setStatsigEnvironment([App::environment()]);
         $statsigUser->setIP(request()->ip());
 
         // What are the difference between current locale and get locale?
         // $statsigUser->setLocale(App::currentLocale());
-        $statsigUser->setLocale(App::getLocale());
+        $statsigUser->setLocale(App::currentLocale());
 
         // are these set automatically? can i remove?
         $statsigUser->setUserAgent(request()->userAgent());
