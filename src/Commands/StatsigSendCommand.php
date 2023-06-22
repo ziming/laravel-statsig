@@ -15,6 +15,14 @@ class StatsigSendCommand extends Command
 
     public function handle(): int
     {
+
+        // I kept getting file: /tmp/statsig.logs does not exist error
+        // but my friend doesn't. So anyway I add this to make sure it exist
+        // before we run this command.
+        if (file_exists('/tmp/statsig.logs') === false) {
+            touch('/tmp/statsig.logs');
+        }
+
         // TODO: Run the Statsig send command here
         $arguments = [
             '--secret' => config('statsig.secret'),
