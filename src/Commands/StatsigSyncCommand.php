@@ -17,8 +17,8 @@ class StatsigSyncCommand extends Command
     {
         // TODO: Run the Statsig sync command here
         $arguments = [
-            '--secret=' => config('statsig.secret'),
-            '--adapter-class=' => config('statsig.data_adapter'),
+            '--secret' => config('statsig.secret'),
+            '--adapter-class' => escapeshellarg(config('statsig.data_adapter')),
             // --adapter-arg Not used yet
         ];
 
