@@ -18,8 +18,7 @@ class StatsigSendCommand extends Command
         // TODO: Run the Statsig send command here
         $arguments = [
             '--secret' => config('statsig.secret'),
-            '--adapter-class' => escapeshellarg(config('statsig.data_adapter')),
-            // --adapter-arg Not used yet
+            '--adapter-class' => escapeshellarg(config('statsig.logging_adapter')),
         ];
 
         // Hope the package name and folders doesn't change in the future

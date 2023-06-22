@@ -19,7 +19,6 @@ class StatsigSyncCommand extends Command
         $arguments = [
             '--secret' => config('statsig.secret'),
             '--adapter-class' => escapeshellarg(config('statsig.data_adapter')),
-            // --adapter-arg Not used yet
         ];
 
         // Hope the package name and folders doesn't change in the future
