@@ -10,7 +10,7 @@ Laravel Package for Statsig.
 This package is still very early in development & likely not ready for production use yet. I have only used it on
 non production environments so far.
 
-Use at your own risk if you want to try it now.
+Use at your own risk if you want to try it now. But if you have used in production, it would be great to let me know :)
 
 It is basically a wrapper around the [Statsig PHP SDK](https://docs.statsig.com/server/phpSDK)
 
@@ -74,12 +74,14 @@ return [
 ## Usage
 
 ```php
-use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Auth;
 use Statsig\StatsigUser;
-use Ziming\LaravelStatsig\Utils\LaravelUserToStatsigUserConverter;
+use Ziming\LaravelStatsig\LaravelStatsig;
 use Ziming\LaravelStatsig\LaravelStatsigEvent;
+use Ziming\LaravelStatsig\Utils\LaravelUserToStatsigUserConverter;
 
-$laravelStatsig = new Ziming\LaravelStatsig();
+$laravelStatsig = new LaravelStatsig();
+$user = Auth::user();
 
 // The Facade Version is fine too
 LaravelStatsig::checkGate($user, 'gate_name');
