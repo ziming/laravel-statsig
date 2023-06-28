@@ -80,12 +80,17 @@ use Ziming\LaravelStatsig\LaravelStatsigEvent;
 $laravelStatsig = new Ziming\LaravelStatsig();
 
 // The Facade Version is fine too
-LaravelStatsig::checkGate($user, '<gate_name>');
+LaravelStatsig::checkGate($user, 'gate_name');
 
 // You can set add this to your ServiceProvider boot() method to
 // override the default laravel user to Statsig user conversion code too if you want
 LaravelUserToStatsigUserConverter::setLaravelUserToStatsigUserConversionCallback(function (User $laravelUser): StatsigUser {
-        $statsigUser = StatsigUser::withUserID($laravelUser->getAuthIdentifier());
+        $statsigUser = StatsigUser::withUserID((string) $laravelUser->getAuthIdentifier());
+        $statsigUser->setEmail($laravelUser->getEmailForVerification());
+        $statsigUser->setStatsigEnvironment([App::environment()]);
+        $statsigUser->setIP(request()->ip());
+        $statsigUser->setLocale(App::currentLocale());
+        $statsigUser->setUserAgent(request()->userAgent());
         $statsigUser->setCountry('US');
         
         return $statsigUser;
@@ -93,8 +98,9 @@ LaravelUserToStatsigUserConverter::setLaravelUserToStatsigUserConversionCallback
 
 // Lastly you can also use LaravelStatsigEvent instead of StatsigEvent
 // as it accepts a laravel user object
-$statsigEvent = new LaravelStatsigEvent('event-name');
-$statsigUser->setUser(Auth::user());
+$statsigEvent = new LaravelStatsigEvent('event_name');
+$statsigEvent->setUser(Auth::user());
+$laravelStatsig->logEvent($statsigEvent);
 ```
 
 ## Testing

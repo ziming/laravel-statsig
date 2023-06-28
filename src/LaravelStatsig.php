@@ -92,7 +92,7 @@ class LaravelStatsig
     }
 
     /**
-     * If I missed out anything or if Statsig added new methods
+     * If I missed out anything or if Statsig added new methods to the Statsig class
      */
     public function __call(string $name, array $arguments): mixed
     {

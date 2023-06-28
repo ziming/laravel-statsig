@@ -23,7 +23,6 @@ class StatsigSendCommand extends Command
             touch('/tmp/statsig.logs');
         }
 
-        // TODO: Run the Statsig send command here
         $arguments = [
             '--secret' => config('statsig.secret'),
             '--adapter-class' => escapeshellarg(config('statsig.logging_adapter')),

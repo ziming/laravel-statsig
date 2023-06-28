@@ -15,7 +15,6 @@ class StatsigSyncCommand extends Command
 
     public function handle(): int
     {
-        // TODO: Run the Statsig sync command here
         $arguments = [
             '--secret' => config('statsig.secret'),
             '--adapter-class' => escapeshellarg(config('statsig.data_adapter')),
