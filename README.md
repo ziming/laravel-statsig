@@ -7,14 +7,16 @@
 
 Laravel Package for Statsig.
 
-This package is still very early in development & likely not ready for production use yet. 
-Use at your own risk if you want to try it now as breaking changes are likely to happen.
+This package is still very early in development & likely not ready for production use yet. I have only used it on
+non production environments so far.
+
+Use at your own risk if you want to try it now.
 
 It is basically a wrapper around the [Statsig PHP SDK](https://docs.statsig.com/server/phpSDK)
 
 ## Support us
 
-New Adapters will be nice. Donations are welcomed too. Anything goes. 
+New Adapters will be nice. Vapor/Serverless Support will be nice. Donations are welcomed too. Anything goes. 
 
 You can also let Stasig know that [this package referred you there](https://statsig.com/updates#6/12/2023)
 
@@ -103,6 +105,27 @@ $statsigEvent->setUser(Auth::user());
 $laravelStatsig->logEvent($statsigEvent);
 ```
 
+A handy blade directive is also provided to check against Statsig Feature Gates in your frontend blade templates
+
+It is confusingly named in all lowercase to match the official laravel naming conventions for blade directives.
+
+Currently it can only be used if the user is logged in.
+
+```blade
+@statsigfeaturegate('gate_name')
+    <p>This is shown if this statsig gate return true</p>
+@endstatsigfeaturegate
+```
+
+Lastly, a helper function is also provided if you want to be even more concise in your blade templates.
+It is named in snake case, following laravel naming conventions for global helper functions.
+
+Like the blade directive, currently it can only be used if the user is logged in.
+
+```blade
+<div class="{{ statsig_feature_gate('awesome_feature') ? 'border-green' : '' }}">
+</div>
+```
 ## Testing
 
 ```bash

@@ -36,9 +36,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Ziming\\LaravelStatsig\\": "src/",
-            "Ziming\\LaravelStatsig\\Database\\Factories\\": "database/factories/"
-        }
+            "Ziming\\LaravelStatsig\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

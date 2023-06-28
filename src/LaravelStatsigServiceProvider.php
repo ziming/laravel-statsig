@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Ziming\LaravelStatsig;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Ziming\LaravelStatsig\Commands\StatsigSendCommand;
@@ -25,5 +27,12 @@ class LaravelStatsigServiceProvider extends PackageServiceProvider
                 StatsigSyncCommand::class,
                 StatsigSendCommand::class,
             ]);
+    }
+
+    public function packageBooted(): void
+    {
+        Blade::if('statsiggate', function (string $gateName) {
+            return LaravelStatsig::checkGate(Auth::user(), $gateName);
+        });
     }
 }

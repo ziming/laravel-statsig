@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ziming\LaravelStatsig\Utils;
 
 use Closure;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\App;
 use InvalidArgumentException;
@@ -14,7 +15,7 @@ class LaravelUserToStatsigUserConverter
 {
     private static ?Closure $LaravelUserToStatsigUserConversionCallback = null;
 
-    public static function defaultConvert(User $laravelUser): StatsigUser
+    public static function defaultConvert(Authenticatable|User $laravelUser): StatsigUser
     {
         $statsigUser = StatsigUser::withUserID(
             (string) $laravelUser->getAuthIdentifier()
@@ -46,7 +47,7 @@ class LaravelUserToStatsigUserConverter
     public static function getLaravelUserToStatsigUserConversionCallback(): callable
     {
         if (self::$LaravelUserToStatsigUserConversionCallback === null) {
-            return function (User $laravelUser): StatsigUser {
+            return function (Authenticatable $laravelUser): StatsigUser {
                 return self::defaultConvert($laravelUser);
             };
         }
@@ -54,7 +55,7 @@ class LaravelUserToStatsigUserConverter
         return self::$LaravelUserToStatsigUserConversionCallback;
     }
 
-    public static function convertLaravelUserToStatsigUser(User $laravelUser): StatsigUser
+    public static function convertLaravelUserToStatsigUser(Authenticatable $laravelUser): StatsigUser
     {
         $callback = self::getLaravelUserToStatsigUserConversionCallback();
 

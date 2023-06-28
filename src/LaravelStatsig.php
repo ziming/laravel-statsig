@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ziming\LaravelStatsig;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\User;
 use Statsig\Adapters\IDataAdapter;
 use Statsig\Adapters\ILoggingAdapter;
@@ -31,36 +32,36 @@ class LaravelStatsig
         $this->statsigServer = new StatsigServer(config('statsig.secret'), $options);
     }
 
-    public function checkGate(StatsigUser|User $user, string $gate): bool
+    public function checkGate(StatsigUser|Authenticatable $user, string $gate): bool
     {
-        if ($user instanceof User) {
+        if ($user instanceof Authenticatable) {
             $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
         }
 
         return $this->statsigServer->checkGate($user, $gate);
     }
 
-    public function getConfig(StatsigUser|User $user, string $config): DynamicConfig
+    public function getConfig(StatsigUser|Authenticatable $user, string $config): DynamicConfig
     {
-        if ($user instanceof User) {
+        if ($user instanceof Authenticatable) {
             $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
         }
 
         return $this->statsigServer->getConfig($user, $config);
     }
 
-    public function getExperiment(StatsigUser|User $user, string $experiment): DynamicConfig
+    public function getExperiment(StatsigUser|Authenticatable $user, string $experiment): DynamicConfig
     {
-        if ($user instanceof User) {
+        if ($user instanceof Authenticatable) {
             $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
         }
 
         return $this->statsigServer->getExperiment($user, $experiment);
     }
 
-    public function getLayer(StatsigUser|User $user, string $layer): Layer
+    public function getLayer(StatsigUser|Authenticatable $user, string $layer): Layer
     {
-        if ($user instanceof User) {
+        if ($user instanceof Authenticatable) {
             $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
         }
 
@@ -72,9 +73,9 @@ class LaravelStatsig
         $this->statsigServer->logEvent($event);
     }
 
-    public function getClientInitializeResponse(StatsigUser|user $user): ?array
+    public function getClientInitializeResponse(StatsigUser|Authenticatable $user): ?array
     {
-        if ($user instanceof User) {
+        if ($user instanceof Authenticatable) {
             $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
         }
 
