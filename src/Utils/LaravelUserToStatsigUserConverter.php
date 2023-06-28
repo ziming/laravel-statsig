@@ -13,7 +13,7 @@ use Statsig\StatsigUser;
 
 class LaravelUserToStatsigUserConverter
 {
-    private static ?Closure $LaravelUserToStatsigUserConversionCallback = null;
+    private static ?Closure $conversionCallback = null;
 
     public static function defaultConvert(Authenticatable|User $laravelUser): StatsigUser
     {
@@ -35,29 +35,29 @@ class LaravelUserToStatsigUserConverter
         return $statsigUser;
     }
 
-    public static function setLaravelUserToStatsigUserConversionCallback(callable $callable): void
+    public static function setConversionCallback(callable $callable): void
     {
         if (! is_callable($callable)) {
             throw new InvalidArgumentException('This is not a callable');
         }
 
-        self::$LaravelUserToStatsigUserConversionCallback = $callable;
+        self::$conversionCallback = $callable;
     }
 
-    public static function getLaravelUserToStatsigUserConversionCallback(): callable
+    public static function getConversionCallback(): callable
     {
-        if (self::$LaravelUserToStatsigUserConversionCallback === null) {
+        if (self::$conversionCallback === null) {
             return function (Authenticatable $laravelUser): StatsigUser {
                 return self::defaultConvert($laravelUser);
             };
         }
 
-        return self::$LaravelUserToStatsigUserConversionCallback;
+        return self::$conversionCallback;
     }
 
     public static function convertLaravelUserToStatsigUser(Authenticatable $laravelUser): StatsigUser
     {
-        $callback = self::getLaravelUserToStatsigUserConversionCallback();
+        $callback = self::getConversionCallback();
 
         return $callback($laravelUser);
     }
