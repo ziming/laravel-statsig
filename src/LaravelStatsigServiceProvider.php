@@ -10,6 +10,7 @@ use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Ziming\LaravelStatsig\Commands\StatsigSendCommand;
 use Ziming\LaravelStatsig\Commands\StatsigSyncCommand;
+use Ziming\LaravelStatsig\Facades\LaravelStatsig;
 
 class LaravelStatsigServiceProvider extends PackageServiceProvider
 {

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Auth;
-use Ziming\LaravelStatsig\LaravelStatsig;
+use Ziming\LaravelStatsig\Facades\LaravelStatsig;
 
 if (! function_exists('statsig_feature_gate')) {
     function statsig_feature_gate(string $name): bool

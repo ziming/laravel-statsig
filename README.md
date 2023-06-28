@@ -76,11 +76,11 @@ return [
 ```php
 use Illuminate\Support\Facades\Auth;
 use Statsig\StatsigUser;
-use Ziming\LaravelStatsig\LaravelStatsig;
+use Ziming\LaravelStatsig\Facades\LaravelStatsig;
 use Ziming\LaravelStatsig\LaravelStatsigEvent;
 use Ziming\LaravelStatsig\Utils\LaravelUserToStatsigUserConverter;
 
-$laravelStatsig = new LaravelStatsig();
+$laravelStatsig = new Ziming\LaravelStatsig();
 $user = Auth::user();
 
 // The Facade Version is fine too
