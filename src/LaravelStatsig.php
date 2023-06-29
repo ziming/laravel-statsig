@@ -40,6 +40,36 @@ class LaravelStatsig
         return $this->statsigServer->checkGate($user, $gate);
     }
 
+    public function checkAllGatesAreActive(StatsigUser|Authenticatable $user, array $gates): bool
+    {
+        if ($user instanceof Authenticatable) {
+            $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
+        }
+
+        foreach ($gates as $gate) {
+            if ($this->statsigServer->checkGate($user, $gate) === false) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function checkSomeGatesAreActive(StatsigUser|Authenticatable $user, array $gates): bool
+    {
+        if ($user instanceof Authenticatable) {
+            $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
+        }
+
+        foreach ($gates as $gate) {
+            if ($this->statsigServer->checkGate($user, $gate) === true) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function getConfig(StatsigUser|Authenticatable $user, string $config): DynamicConfig
     {
         if ($user instanceof Authenticatable) {

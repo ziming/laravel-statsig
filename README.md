@@ -16,7 +16,16 @@ It is basically a wrapper around the [Statsig PHP SDK](https://docs.statsig.com/
 
 ## Support us
 
-New Adapters will be nice. Octane/Vapor/Serverless Support will be nice. Middleware will be nice. Donations are welcomed too. Anything goes. 
+The following features are being considered for the future. If any of it interest you, feel free to submit a PR.
+
+- New Adaptors
+- New Middlewares
+- Convenience Traits & Methods
+- Octane/Vapor/Serverless Support (Probably far in the future)
+
+New Adapters will be nice. Octane/Vapor/Serverless Support will be nice. Middleware will be nice. 
+
+Donations are welcomed too as an alternative. Anything goes. 
 
 You can also let Stasig know that [this package referred you there](https://statsig.com/updates#6/12/2023)
 
