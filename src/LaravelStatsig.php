@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ziming\LaravelStatsig;
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Support\Facades\Auth;
 use Statsig\Adapters\IDataAdapter;
 use Statsig\Adapters\ILoggingAdapter;
 use Statsig\DynamicConfig;
@@ -99,6 +100,12 @@ class LaravelStatsig
 
     public function logEvent(StatsigEvent $event): void
     {
+        $this->statsigServer->logEvent($event);
+    }
+
+    public function logEventWithAuthUser(LaravelStatsigEvent $event): void
+    {
+        $event->setUser(Auth::user());
         $this->statsigServer->logEvent($event);
     }
 
