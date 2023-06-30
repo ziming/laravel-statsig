@@ -32,7 +32,7 @@ class LaravelStatsigServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        Blade::if('statsiggate', function (string $gateName) {
+        Blade::if('statsigfeaturegate', function (string $gateName) {
             return LaravelStatsig::checkGate(Auth::user(), $gateName);
         });
     }
