@@ -22,20 +22,22 @@ class LaravelUserToStatsigUserConverter
         );
 
         $statsigUser->setEmail($laravelUser->getEmailForVerification());
-        $statsigUser->setStatsigEnvironment([App::environment()]);
         $statsigUser->setIP(request()->ip());
 
-        // What are the difference between current locale and get locale?
+        // What is the difference between current locale and get locale?
         // $statsigUser->setLocale(App::currentLocale());
         $statsigUser->setLocale(App::currentLocale());
 
         // are these set automatically? can i remove?
-        $statsigUser->setUserAgent(request()->userAgent());
+        $statsigUser->setUserAgent(
+            request()
+                ->userAgent()
+        );
 
         return $statsigUser;
     }
 
-    public static function setConversionCallback(callable $callable): void
+    public static function setConversionCallable(callable $callable): void
     {
         if (! is_callable($callable)) {
             throw new InvalidArgumentException('This is not a callable');
