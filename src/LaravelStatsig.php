@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ziming\LaravelStatsig;
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Statsig\Adapters\IDataAdapter;
 use Statsig\Adapters\ILoggingAdapter;
@@ -29,6 +30,13 @@ class LaravelStatsig
         $this->configAdapter = new (config('statsig.data_adapter'));
         $this->loggingAdapter = new (config('statsig.logging_adapter'));
         $options = new StatsigOptions($this->configAdapter, $this->loggingAdapter);
+
+        if (App::isLocal()) {
+            $options->setEnvironmentTier('development');
+        } else {
+            $options->setEnvironmentTier(App::environment());
+        }
+
         $this->statsigServer = new StatsigServer(config('statsig.secret'), $options);
     }
 
