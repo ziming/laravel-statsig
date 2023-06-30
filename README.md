@@ -7,8 +7,7 @@
 
 Laravel Package for Statsig.
 
-This package is still very early in development & likely not ready for production use yet. I have only used it on
-non production environments so far.
+This package is still very early in development & likely not ready for production use yet. I have only just started using it in production.
 
 Use at your own risk if you want to try it now. But if you have used in production, it would be great to let me know :)
 
@@ -93,6 +92,7 @@ use Illuminate\Foundation\Auth\User;
 
 $laravelStatsig = new Ziming\LaravelStatsig();
 $user = Auth::user();
+$laravelStatsig->checkGate($user, 'gate_name');
 
 // The Facade Version is fine too
 LaravelStatsig::checkGate($user, 'gate_name');
@@ -114,6 +114,11 @@ LaravelUserToStatsigUserConverter::setConversionCallable(function (User $laravel
 // Lastly you can also use LaravelStatsigEvent instead of StatsigEvent
 // as it accepts a laravel user object
 $statsigEvent = new LaravelStatsigEvent('event_name');
+
+// You can use this convenience method
+LaravelStatsig::logEventWithAuthUser($statsigEvent);
+
+// or this
 $statsigEvent->setUser(Auth::user());
 $laravelStatsig->logEvent($statsigEvent);
 ```
