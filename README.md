@@ -5,9 +5,10 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/ziming/laravel-statsig/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/ziming/laravel-statsig/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/ziming/laravel-statsig.svg?style=flat-square)](https://packagist.org/packages/ziming/laravel-statsig)
 
-Laravel Package for Statsig.
+Laravel Package for Statsig. A Feature Gate & A/B Testing Platform with a somewhat decent free tier.
 
-This package is still very early in development & likely not ready for production use yet. I have only just started using it in production.
+This package is still very early in development & likely not ready for production use yet. 
+I have only just started using it in production on a small site 1st.
 
 Use at your own risk if you want to try it now. But if you have used in production, it would be great to let me know :)
 
@@ -21,8 +22,6 @@ The following features are being considered for the future. If any of it interes
 - New Middlewares
 - Convenience Traits & Methods
 - Octane/Vapor/Serverless Support (Probably far in the future)
-
-New Adapters will be nice. Octane/Vapor/Serverless Support will be nice. Middleware will be nice. 
 
 Donations are welcomed too as an alternative. Anything goes. 
 
@@ -127,7 +126,7 @@ A handy blade directive is also provided to check against Statsig Feature Gates 
 
 It is confusingly named in all lowercase to match the official laravel naming conventions for blade directives.
 
-Currently it can only be used if the user is logged in.
+Currently it can only be used if the user is logged in. Do not use it for your guest pages for now.
 
 ```blade
 @statsigfeaturegate('gate_name')
