@@ -8,7 +8,7 @@
 Laravel Package for Statsig. A Feature Gate & A/B Testing Platform with a somewhat decent free tier.
 
 This package is still very early in development & likely not ready for production use yet. 
-I have only just started using it in production on a small site 1st.
+I have only just started using it in production on 2 small sites currently.
 
 Use at your own risk if you want to try it now. But if you have used in production, it would be great to let me know :)
 
@@ -18,7 +18,7 @@ It is basically a wrapper around the [Statsig PHP SDK](https://docs.statsig.com/
 
 The following features are being considered for the future. If any of it interest you, feel free to submit a PR.
 
-- New Adaptors
+- New Adapters
 - New Middlewares
 - Convenience Traits & Methods
 - Octane/Vapor/Serverless Support (Probably far in the future)
@@ -129,9 +129,9 @@ It is confusingly named in all lowercase to match the official laravel naming co
 Currently it can only be used if the user is logged in. Do not use it for your guest pages for now.
 
 ```blade
-@statsigfeaturegate('gate_name')
+@statsigcheckgate('gate_name')
     <p>This is shown if this statsig gate return true</p>
-@endstatsigfeaturegate
+@endstatsigcheckgate
 ```
 
 Lastly, a helper function is also provided if you want to be even more concise in your blade templates.
@@ -140,7 +140,7 @@ It is named in snake case, following laravel naming conventions for global helpe
 Like the blade directive, currently it can only be used if the user is logged in.
 
 ```blade
-<div class="{{ statsig_feature_gate('awesome_feature') ? 'border-green' : '' }}">
+<div class="{{ statsig_check_gate('awesome_feature') ? 'border-green' : '' }}">
 </div>
 ```
 ## Testing

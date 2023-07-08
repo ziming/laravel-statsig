@@ -141,6 +141,10 @@ class LaravelStatsig
      */
     public function __call(string $name, array $arguments): mixed
     {
+        if (isset($arguments[0]) && $arguments[0] instanceof Authenticatable) {
+            $arguments[0] = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($arguments[0]);
+        }
+
         return $this->statsigServer->$name(...$arguments);
     }
 }
