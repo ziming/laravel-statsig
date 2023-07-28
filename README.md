@@ -5,12 +5,11 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/ziming/laravel-statsig/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/ziming/laravel-statsig/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/ziming/laravel-statsig.svg?style=flat-square)](https://packagist.org/packages/ziming/laravel-statsig)
 
-Laravel Package for Statsig. A Feature Gate & A/B Testing Platform with a somewhat decent free tier.
+Laravel Package for Statsig. A Feature Gate & A/B Testing Platform with a somewhat decent free tier
 
-This package is still very early in development & likely not ready for production use yet. 
-I have only just started using it in production on 2 small sites currently.
+This package is still very early in development, but I have used it on a few small production sites for a while already.
 
-Use at your own risk if you want to try it now. But if you have used in production, it would be great to let me know :)
+If you have used in production, it would be great to let me know any feedback :)
 
 It is basically a wrapper around the [Statsig PHP SDK](https://docs.statsig.com/server/phpSDK)
 
@@ -20,7 +19,7 @@ The following features are being considered for the future. If any of it interes
 
 - New Adapters
 - New Middlewares
-- Convenience Traits & Methods
+- More Convenience Traits & Methods
 - HTTP & Console API support
 - Octane/Vapor/Serverless Support (Probably far in the future)
 
@@ -120,8 +119,8 @@ LaravelStatsigUserConfiguration::setConversionCallable(function (User $laravelUs
 
 // Lastly you can also use LaravelStatsigEvent instead of StatsigEvent
 // as it accepts a laravel user object
-// I recommend the object action event naming framework
-// https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/
+// See Useful References at the end of the read me for some best practices to follow for events naming conventions
+
 $statsigEvent = new LaravelStatsigEvent('event_name');
 
 // You can also use this convenience method
@@ -158,6 +157,20 @@ Like the blade directive, currently it can only be used if the user is logged in
 ```bash
 composer test
 ```
+## Userful References
+
+Below are links to some good reads that I think would benefit you in getting started:
+
+### Feature Gates
+- https://www.statsig.com/blog/feature-gates-101
+
+### Sample Sizes
+- https://blog.statsig.com/you-dont-need-large-sample-sizes-to-run-a-b-tests-6044823e9992
+- https://www.statsig.com/blog/intro-to-sample-size
+
+### Event Naming Best Practices
+- https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/
+- https://davidwells.io/blog/clean-analytics
 
 ## Changelog
 
