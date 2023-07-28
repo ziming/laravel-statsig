@@ -167,10 +167,12 @@ Below are links to some good reads that I think would benefit you in getting sta
 ### Sample Sizes
 - https://blog.statsig.com/you-dont-need-large-sample-sizes-to-run-a-b-tests-6044823e9992
 - https://www.statsig.com/blog/intro-to-sample-size
+- https://www.statsig.com/blog/you-dont-need-millions-of-users-experimentation
 
 ### Event Naming Best Practices
 - https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/
 - https://davidwells.io/blog/clean-analytics
+- https://databeats.community/p/product-analytics-components-of-event-data
 
 ## Changelog
 
