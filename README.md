@@ -21,6 +21,7 @@ The following features are being considered for the future. If any of it interes
 - New Adapters
 - New Middlewares
 - Convenience Traits & Methods
+- HTTP & Console API support
 - Octane/Vapor/Serverless Support (Probably far in the future)
 
 Donations are welcomed too as an alternative. Anything goes. 
@@ -75,12 +76,12 @@ return [
 
     'data_adapter' => LocalFileDataAdapter::class,
     'data_adapter_arguments' => [
-        // '/tmp/statsig/',
+        // '/tmp/statsig/', leave blank for the default directory
     ],
 
     'logging_adapter' => LocalFileLoggingAdapter::class,
     'logging_adapter_arguments' => [
-        // '/tmp/statsig.logs',
+        // '/tmp/statsig.logs', leave blank for the default file path
     ],
 ];
 ```
@@ -88,13 +89,13 @@ return [
 ## Usage
 
 ```php
+use Illuminate\Support\Facades\App;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Statsig\StatsigUser;
 use Ziming\LaravelStatsig\Facades\LaravelStatsig;
 use Ziming\LaravelStatsig\LaravelStatsigEvent;
-use Ziming\LaravelStatsig\Utils\LaravelUserToStatsigUserConverter;
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Foundation\Auth\User;
+use Ziming\LaravelStatsig\LaravelStatsigUserConfiguration;
 
 $laravelStatsig = new Ziming\LaravelStatsig();
 $user = Auth::user();
@@ -103,9 +104,9 @@ $laravelStatsig->checkGate($user, 'gate_name');
 // The Facade Version is fine too
 LaravelStatsig::checkGate($user, 'gate_name');
 
-// You can set add this to your ServiceProvider boot() method to
+// You can set add this to 1 of your ServiceProviders boot() method to
 // override the default laravel user to Statsig user conversion code too if you want
-LaravelUserToStatsigUserConverter::setConversionCallable(function (User $laravelUser): StatsigUser {
+LaravelStatsigUserConfiguration::setConversionCallable(function (User $laravelUser): StatsigUser {
         $statsigUser = StatsigUser::withUserID((string) $laravelUser->getAuthIdentifier());
         $statsigUser->setEmail($laravelUser->getEmailForVerification());
         $statsigUser->setIP(request()->ip());
@@ -119,9 +120,11 @@ LaravelUserToStatsigUserConverter::setConversionCallable(function (User $laravel
 
 // Lastly you can also use LaravelStatsigEvent instead of StatsigEvent
 // as it accepts a laravel user object
+// I recommend the object action event naming framework
+// https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/
 $statsigEvent = new LaravelStatsigEvent('event_name');
 
-// You can use this convenience method
+// You can also use this convenience method
 LaravelStatsig::logEventWithAuthUser($statsigEvent);
 
 // or this

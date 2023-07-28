@@ -11,11 +11,11 @@ return [
 
     'data_adapter' => LocalFileDataAdapter::class,
     'data_adapter_arguments' => [
-        // '/tmp/statsig/',
+        // '/tmp/statsig/', leave blank for the default directory
     ],
 
     'logging_adapter' => LocalFileLoggingAdapter::class,
     'logging_adapter_arguments' => [
-        // '/tmp/statsig.logs',
+        // '/tmp/statsig.logs', leave blank for the default file path
     ],
 ];

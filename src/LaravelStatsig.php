@@ -15,7 +15,6 @@ use Statsig\StatsigEvent;
 use Statsig\StatsigOptions;
 use Statsig\StatsigServer;
 use Statsig\StatsigUser;
-use Ziming\LaravelStatsig\Utils\LaravelUserToStatsigUserConverter;
 
 class LaravelStatsig
 {
@@ -43,7 +42,7 @@ class LaravelStatsig
     public function checkGate(StatsigUser|Authenticatable $user, string $gate): bool
     {
         if ($user instanceof Authenticatable) {
-            $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
+            $user = LaravelStatsigUserConfiguration::convertLaravelUserToStatsigUser($user);
         }
 
         return $this->statsigServer->checkGate($user, $gate);
@@ -52,7 +51,7 @@ class LaravelStatsig
     public function checkAllGatesAreActive(StatsigUser|Authenticatable $user, array $gates): bool
     {
         if ($user instanceof Authenticatable) {
-            $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
+            $user = LaravelStatsigUserConfiguration::convertLaravelUserToStatsigUser($user);
         }
 
         foreach ($gates as $gate) {
@@ -67,7 +66,7 @@ class LaravelStatsig
     public function checkSomeGatesAreActive(StatsigUser|Authenticatable $user, array $gates): bool
     {
         if ($user instanceof Authenticatable) {
-            $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
+            $user = LaravelStatsigUserConfiguration::convertLaravelUserToStatsigUser($user);
         }
 
         foreach ($gates as $gate) {
@@ -82,7 +81,7 @@ class LaravelStatsig
     public function getConfig(StatsigUser|Authenticatable $user, string $config): DynamicConfig
     {
         if ($user instanceof Authenticatable) {
-            $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
+            $user = LaravelStatsigUserConfiguration::convertLaravelUserToStatsigUser($user);
         }
 
         return $this->statsigServer->getConfig($user, $config);
@@ -91,7 +90,7 @@ class LaravelStatsig
     public function getExperiment(StatsigUser|Authenticatable $user, string $experiment): DynamicConfig
     {
         if ($user instanceof Authenticatable) {
-            $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
+            $user = LaravelStatsigUserConfiguration::convertLaravelUserToStatsigUser($user);
         }
 
         return $this->statsigServer->getExperiment($user, $experiment);
@@ -100,7 +99,7 @@ class LaravelStatsig
     public function getLayer(StatsigUser|Authenticatable $user, string $layer): Layer
     {
         if ($user instanceof Authenticatable) {
-            $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
+            $user = LaravelStatsigUserConfiguration::convertLaravelUserToStatsigUser($user);
         }
 
         return $this->statsigServer->getLayer($user, $layer);
@@ -120,7 +119,7 @@ class LaravelStatsig
     public function getClientInitializeResponse(StatsigUser|Authenticatable $user): ?array
     {
         if ($user instanceof Authenticatable) {
-            $user = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($user);
+            $user = LaravelStatsigUserConfiguration::convertLaravelUserToStatsigUser($user);
         }
 
         return $this->statsigServer->getClientInitializeResponse($user);
@@ -142,7 +141,7 @@ class LaravelStatsig
     public function __call(string $name, array $arguments): mixed
     {
         if (isset($arguments[0]) && $arguments[0] instanceof Authenticatable) {
-            $arguments[0] = LaravelUserToStatsigUserConverter::convertLaravelUserToStatsigUser($arguments[0]);
+            $arguments[0] = LaravelStatsigUserConfiguration::convertLaravelUserToStatsigUser($arguments[0]);
         }
 
         return $this->statsigServer->$name(...$arguments);

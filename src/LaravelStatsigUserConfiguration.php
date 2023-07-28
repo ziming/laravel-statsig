@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ziming\LaravelStatsig\Utils;
+namespace Ziming\LaravelStatsig;
 
 use Closure;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\App;
 use InvalidArgumentException;
 use Statsig\StatsigUser;
 
-class LaravelUserToStatsigUserConverter
+class LaravelStatsigUserConfiguration
 {
     private static ?Closure $conversionCallback = null;
 
