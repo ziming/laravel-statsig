@@ -35,6 +35,12 @@ class StatsigSendCommand extends Command
             $commandToRun .= ' '.$key.' '.$value;
         }
 
+        $adapterArguments = config('statsig.logging_adapter_arguments');
+
+        foreach ($adapterArguments as $key => $value) {
+            $commandToRun .= ' '.$key.' '.$value;
+        }
+
         $result = Process::run($commandToRun);
         $this->info($result->output());
 

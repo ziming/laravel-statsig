@@ -27,6 +27,12 @@ class StatsigSyncCommand extends Command
             $commandToRun .= ' '.$key.' '.$value;
         }
 
+        $adapterArguments = config('statsig.data_adapter_arguments');
+
+        foreach ($adapterArguments as $key => $value) {
+            $commandToRun .= ' '.$key.' '.$value;
+        }
+
         $result = Process::run($commandToRun);
         $this->info($result->output());
 
