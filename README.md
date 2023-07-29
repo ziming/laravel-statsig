@@ -7,21 +7,21 @@
 
 Laravel Package for Statsig. A Feature Gate & A/B Testing Platform with a somewhat decent free tier
 
-This package is still very early in development, but I have used it on a few small production sites for a while already.
+This package is still very early in development, but I have used it on a few small production sites for a while.
 
-If you have used in production, it would be great to let me know any feedback :)
+If you have used in production, it would be great to let me know :)
 
 It is basically a wrapper around the [Statsig PHP SDK](https://docs.statsig.com/server/phpSDK)
 
 ## Support us
 
-The following features are being considered for the future. If any of it interest you, feel free to submit a PR.
+The following features are being considered for the future. Feel free to suggest or PR others
+feel free to submit a PR.
 
-- New Adapters
-- New Middlewares
+- Custom IDs Support
 - More Convenience Traits & Methods
 - HTTP & Console API support
-- Octane/Vapor/Serverless Support (Probably far in the future)
+- Octane/Vapor/Serverless Support (It probably already works but it is not confirmed)
 
 Donations are welcomed too as an alternative. Anything goes. 
 
@@ -74,13 +74,17 @@ return [
     'secret' => env('STATSIG_SECRET_KEY'),
 
     'data_adapter' => LocalFileDataAdapter::class,
+    
+    // arguments to the Data Adapter class constructor
     'data_adapter_arguments' => [
-        // '/tmp/statsig/', leave blank for the default directory
+        // '/tmp/statsig/', // empty array for the default directory for the default Data Adapter
     ],
 
     'logging_adapter' => LocalFileLoggingAdapter::class,
+    
+    // arguments to the Logging Adapter class constructor
     'logging_adapter_arguments' => [
-        // '/tmp/statsig.logs', leave blank for the default file path
+        // '/tmp/statsig.logs', // empty array for the default file path for the default Logging Adapter
     ],
 ];
 ```
@@ -123,6 +127,14 @@ LaravelStatsigUserConfiguration::setConversionCallable(function (User $laravelUs
 
 $statsigEvent = new LaravelStatsigEvent('event_name');
 
+// Giving it a value is optional
+$statsigEvent->setValue('string-or-float-or-int-or-whatever-primitive-type');
+
+// Extra event metadata is optional too. See the official Statsig docs on how many you can send
+$statsigEvent->setMetadata([
+    'key' => 'value' 
+]);
+
 // You can also use this convenience method
 LaravelStatsig::logEventWithAuthUser($statsigEvent);
 
@@ -135,11 +147,17 @@ A handy blade directive is also provided to check against Statsig Feature Gates 
 
 It is confusingly named in all lowercase to match the official laravel naming conventions for blade directives.
 
-Currently it can only be used if the user is logged in. Do not use it for your guest pages for now.
-
 ```blade
 @statsigcheckgate('gate_name')
-    <p>This is shown if this statsig gate return true</p>
+    <p>This is shown if this statsig gate return true for the authenticated user</p>
+@endstatsigcheckgate
+
+@statsigcheckgate('gate_name', 'user-identifier')
+    <p>This is usually used for guest user but can be ur authenticated user identifier too</p>
+@endstatsigcheckgate
+
+@statsigcheckgate('gate_name', $user)
+    <p>$user can be a StatsigUser or a laravel user instance</p>
 @endstatsigcheckgate
 ```
 
@@ -149,15 +167,26 @@ It is named in snake case, following laravel naming conventions for global helpe
 Like the blade directive, currently it can only be used if the user is logged in.
 
 ```blade
-<div class="{{ statsig_check_gate('awesome_feature') ? 'border-green' : '' }}">
+<div class="{{ statsig_check_gate('gate_name') ? 'border-red' : '' }}">
+The Authenticated user will be used to check if it passes this gate
+</div>
+
+<div class="{{ statsig_check_gate('gate_name', 'user-identifier') ? 'border-red' : '' }}">
+This is usually used for guest user but can be ur authenticated user identifier too
+</div>
+
+<div class="{{ statsig_check_gate('gate_name', $user) ? 'border-red' : '' }}">
+Use this is you want to pass in a statsig user or laravel user instance
 </div>
 ```
 ## Testing
 
+No tests currently, feel free to PR
+
 ```bash
 composer test
 ```
-## Userful References
+## Useful References
 
 Below are links to some good reads that I think would benefit you in getting started:
 
