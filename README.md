@@ -5,7 +5,8 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/ziming/laravel-statsig/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/ziming/laravel-statsig/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/ziming/laravel-statsig.svg?style=flat-square)](https://packagist.org/packages/ziming/laravel-statsig)
 
-Laravel Package for Statsig. A Feature Gate & A/B Testing Platform with a somewhat decent free tier
+Laravel Package for Statsig. A Feature Gate & A/B Testing Platform with a somewhat decent free tier. Compared with other laravel ab testing packages, it supports modern statistical methods such as CUPED, Sample Ratio Mismatch, Bonferroni Correction, Winsorization & Bayesian A/B Experiments to name a few.
+
 
 This package is still very early in development, but I have used it on a few small production sites for a while.
 
