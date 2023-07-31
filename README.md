@@ -54,7 +54,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
+        // https://docs.statsig.com/server/phpSDK#sync
         $schedule->command(StatsigSyncCommand::class)->everyMinute();
+        
+        // https://docs.statsig.com/server/phpSDK#send
         $schedule->command(StatsigSendCommand::class)->everyMinute();
     }
 ```
