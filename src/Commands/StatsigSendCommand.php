@@ -6,6 +6,7 @@ namespace Ziming\LaravelStatsig\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Process;
+use Statsig\Adapters\LocalFileLoggingAdapter;
 
 class StatsigSendCommand extends Command
 {
@@ -17,10 +18,20 @@ class StatsigSendCommand extends Command
     {
 
         // I kept getting file: /tmp/statsig.logs does not exist error
-        // but my friend doesn't. So anyway I add this to make sure it exist
-        // before we run this command.
-        if (file_exists('/tmp/statsig.logs') === false) {
-            touch('/tmp/statsig.logs');
+        // So anyway I add this to make sure it exist before we run Statsig Send Command.
+
+        if (config('statsig.logging_adapter') === LocalFileLoggingAdapter::class) {
+            $argumentCount = count(config('statsig.logging_adapter_arguments'));
+
+            if ($argumentCount === 0) {
+                $loggingAdapterFilePath = '/tmp/statsig.logs';
+            } else {
+                $loggingAdapterFilePath = config('statsig.logging_adapter_arguments')[0];
+            }
+
+            if (file_exists($loggingAdapterFilePath) === false) {
+                touch($loggingAdapterFilePath);
+            }
         }
 
         $arguments = [
