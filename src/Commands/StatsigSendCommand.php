@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Ziming\LaravelStatsig\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Process\Exceptions\ProcessTimedOutException;
 use Illuminate\Support\Facades\Process;
 use Statsig\Adapters\LocalFileLoggingAdapter;
 
@@ -52,9 +54,16 @@ class StatsigSendCommand extends Command
             $commandToRun .= ' '.$key.' '.$value;
         }
 
-        $result = Process::run($commandToRun);
-        $this->info($result->output());
+        try {
+            $result = Process::run($commandToRun);
+            $this->info($result->output());
+            return self::SUCCESS;
+        } catch (ProcessTimedOutException $e) {
+            report(
+                new Exception('php ./vendor/statsig/statsigsdk/send.php has timed out')
+            );
+        }
 
-        return $result->exitCode();
+        return self::FAILURE;
     }
 }
