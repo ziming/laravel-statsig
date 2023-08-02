@@ -35,10 +35,10 @@ class StatsigSyncCommand extends Command
             $commandToRun .= ' '.$key.' '.$value;
         }
 
-
         try {
             $result = Process::run($commandToRun);
             $this->info($result->output());
+
             return self::SUCCESS;
         } catch (ProcessTimedOutException $e) {
             report(
