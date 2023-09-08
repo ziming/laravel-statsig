@@ -5,24 +5,13 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/ziming/laravel-statsig/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/ziming/laravel-statsig/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/ziming/laravel-statsig.svg?style=flat-square)](https://packagist.org/packages/ziming/laravel-statsig)
 
-Laravel Package for Statsig. A Feature Gate & A/B Testing Platform with a somewhat decent free tier. Compared with other laravel ab testing packages, it supports modern statistical methods such as CUPED, Sample Ratio Mismatch, Bonferroni Correction, Winsorization & Bayesian A/B Experiments to name a few.
-
-
-This package is still very early in development, but I have used it on a few small production sites for a while.
+Laravel Package for Statsig. A Feature Gate & A/B Testing Platform with a nice free tier (Update: This is no longer true as of Aug/Sept 2023)
 
 If you have used in production, it would be great to let me know :)
 
 It is basically a wrapper around the [Statsig PHP SDK](https://docs.statsig.com/server/phpSDK)
 
 ## Support us
-
-The following features are being considered for the future. Feel free to suggest or PR others
-feel free to submit a PR.
-
-- Custom IDs Support
-- More Convenience Traits & Methods
-- HTTP & Console API support
-- Octane/Vapor/Serverless Support (It probably already works but it is not confirmed)
 
 Donations are welcomed too as an alternative. Anything goes. 
 
@@ -194,13 +183,8 @@ composer test
 
 Below are links to some good reads that I think would benefit you in getting started:
 
-### Feature Gates
-- https://www.statsig.com/blog/feature-gates-101
-
-### Sample Sizes
-- https://blog.statsig.com/you-dont-need-large-sample-sizes-to-run-a-b-tests-6044823e9992
-- https://www.statsig.com/blog/intro-to-sample-size
-- https://www.statsig.com/blog/you-dont-need-millions-of-users-experimentation
+### Experimentation
+- https://www.geteppo.com/blog
 
 ### Event Naming Best Practices
 - https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/
