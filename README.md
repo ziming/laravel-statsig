@@ -5,9 +5,9 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/ziming/laravel-statsig/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/ziming/laravel-statsig/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/ziming/laravel-statsig.svg?style=flat-square)](https://packagist.org/packages/ziming/laravel-statsig)
 
-Laravel Package for Statsig. A Feature Gate & A/B Testing Platform with a nice free tier (Update: This is no longer true as of Aug/Sept 2023)
+Laravel Package for Statsig. A Feature Gate & A/B Testing Platform
 
-If you have used in production, it would be great to let me know :)
+Update: As of Aug/Sept 2023, Statsig has decided to cut lots of features from their free tier. Which also mean that if you have a problem with the pro tier features, I will not be able to help you anymore.
 
 It is basically a wrapper around the [Statsig PHP SDK](https://docs.statsig.com/server/phpSDK)
 
