@@ -7,7 +7,7 @@
 
 Laravel Package for Statsig. A Feature Gate & A/B Testing Platform
 
-Update: As of Aug/Sept 2023, Statsig has decided to cut lots of features from their free tier. Which also mean that if you have a problem with the pro tier features, I will not be able to help you anymore.
+Update: As of Aug/Sept 2023, Statsig has decided to cut lots of features from their free tier. Which also mean that if you have a problem with the paid tier features, I will not be able to help you anymore as I am not a paid tier user.
 
 It is basically a wrapper around the [Statsig PHP SDK](https://docs.statsig.com/server/phpSDK)
 
