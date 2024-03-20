@@ -19,7 +19,7 @@
         "php": "^8.1",
         "illuminate/contracts": "^10.0 | ^11.0",
         "spatie/laravel-package-tools": "^1.14.0",
-        "statsig/statsigsdk": "^2.1"
+        "statsig/statsigsdk": "^3.0"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
