@@ -8,7 +8,7 @@ use Statsig\StatsigUser;
 use Ziming\LaravelStatsig\Facades\LaravelStatsig;
 
 if (! function_exists('statsig_check_gate')) {
-    function statsig_check_gate(string $gateName, string|StatsigUser|Authenticatable $userOrUserId = null): bool
+    function statsig_check_gate(string $gateName, string|StatsigUser|Authenticatable|null $userOrUserId = null): bool
     {
         if ($userOrUserId === null) {
             return LaravelStatsig::checkGate(Auth::user(), $gateName);
