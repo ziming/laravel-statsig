@@ -34,7 +34,7 @@ class LaravelStatsigServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        Blade::if('statsigcheckgate', function (string $gateName, string|StatsigUser|Authenticatable $userOrUserId = null) {
+        Blade::if('statsigcheckgate', function (string $gateName, string|StatsigUser|Authenticatable|null $userOrUserId = null) {
             if ($userOrUserId === null) {
                 return LaravelStatsig::checkGate(Auth::user(), $gateName);
             }
